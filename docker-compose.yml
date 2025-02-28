@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: lms_postgres
+    restart: always
+    env_file:
+      - ./server/.env  # Uses backend's .env file
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistent database storage
+
+volumes:
+  postgres_data:
+    driver: local  # Ensures data persistence
