@@ -6,12 +6,36 @@ services:
     container_name: lms_postgres
     restart: always
     env_file:
-      - ./server/.env  # Uses backend's .env file
-    ports:
-      - "5432:5432"
+      - ./server/.env
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Persistent database storage
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lms_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./server  # Make sure this points to your server folder
+    container_name: lms_backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy  # Wait for PostgreSQL to be ready
+    env_file:
+      - ./server/.env
+    ports:
+      - "5000:5000"  # Expose server's port to the host
+    networks:
+      - lms_network
+    command: ["npm", "run", "dev"]  # Runs your Node.js server
+
+networks:
+  lms_network:
+    driver: bridge
 
 volumes:
   postgres_data:
-    driver: local  # Ensures data persistence
+    driver: local
