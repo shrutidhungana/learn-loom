@@ -5,7 +5,7 @@ import { navbarLinks } from "@/config";
 export default function Home() {
   return (
     <>
-      <Navbar links = {navbarLinks} />
+      <Navbar links={navbarLinks} logoSrc="/favicon.jpg" title="LearnLoom" />
     </>
   );
 }

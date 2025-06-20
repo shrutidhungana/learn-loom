@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -7,15 +8,20 @@ import { NavbarLink } from "@/types";
 import { PrimaryButton, SecondaryButton } from "../Buttons";
 
 interface NavbarProps {
+  title: string;
+  logoSrc: string;
   links: NavbarLink[];
 }
 
-const Navbar = ({ links }: NavbarProps) => {
+const Navbar = ({ logoSrc, title, links }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed w-full z-50 top-0 bg-[#1E3A8A]/70 backdrop-blur-md shadow-md px-6 md:px-12 py-4 flex items-center justify-between text-white">
-      <div className="text-2xl font-bold">📘 LearnLoom</div>
+      <div className="flex items-center gap-2">
+        <Image src={logoSrc} alt="Logo" width={32} height={32} />
+        <span className="text-2xl font-bold">{title}</span>
+      </div>
 
       <nav className="hidden md:flex gap-8 items-center">
         {links.map(({ label, href }) => (
