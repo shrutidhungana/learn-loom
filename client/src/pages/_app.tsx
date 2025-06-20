@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>LEARN LOOM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Learning Management System" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.jpg" />
       </Head>
 
       <Component {...pageProps} />
