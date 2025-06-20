@@ -3,10 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { navbarLinks } from "@/config";
+import { NavbarLink } from "@/types";
 import { PrimaryButton, SecondaryButton } from "../Buttons";
 
-const Navbar = () => {
+interface NavbarProps {
+  links: NavbarLink[];
+}
+
+const Navbar = ({ links }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,7 +18,7 @@ const Navbar = () => {
       <div className="text-2xl font-bold">📘 LearnLoom</div>
 
       <nav className="hidden md:flex gap-8 items-center">
-        {navbarLinks?.map(({ label, href }) => (
+        {links.map(({ label, href }) => (
           <Link
             key={label}
             href={href}
@@ -37,12 +41,11 @@ const Navbar = () => {
 
       {open && (
         <div className="absolute top-16 left-0 w-full bg-[#0F172A] flex flex-col items-center gap-6 py-6 md:hidden transition-all">
-          {navbarLinks?.map(({ label, href }) => (
+          {links.map(({ label, href }) => (
             <Link
               key={label}
               href={href}
-              onClick={() => setOpen(false)}
-              className="text-sm font-medium text-white hover:text-[#FACC15]"
+              className="hover:text-[#FACC15] transition-colors text-sm font-medium"
             >
               {label}
             </Link>
